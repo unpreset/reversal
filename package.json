@@ -46,6 +46,11 @@
     "typecheck": "tsc --noEmit",
     "prepare": "simple-git-hooks"
   },
+  "dependencies": {
+    "@types/css-tree": "^2.3.8",
+    "css-tree": "^3.0.0",
+    "magic-string": "^0.30.12"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^3.3.2",
     "@antfu/ni": "^0.23.0",
