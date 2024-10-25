@@ -1,3 +1,5 @@
+import { Magicolor } from '@magic-color/core'
+import { createGenerator } from '@unocss/core'
 import { parse } from 'css-tree'
 import { describe, expect, it } from 'vitest'
 import type { Declaration } from 'css-tree'
@@ -25,6 +27,26 @@ ul li {
   color: #fff;
 }
 `
+
+const uno = createGenerator({
+  theme: {
+    colors: {
+      white: '#fff',
+      primary: '#007bff',
+      foo: {
+        DEFAULT: '#f00',
+        100: '#f0f',
+        200: '#0ff',
+        300: 'rgb(0 0 0)',
+      },
+      bar: {
+        foo: {
+          test: '#f00',
+        },
+      },
+    },
+  },
+})
 
 describe('should', () => {
   function generateParsed(code: string) {
@@ -172,19 +194,33 @@ describe('should', () => {
   it('transfromParsed', () => {
     expect(transfromParsed(
       generateParsed('border-top: 1px solid #eee')!,
+      uno as any,
       { shortify: true },
     )).toMatchInlineSnapshot(`
       [
-        "b-t-[1px]",
+        "b-t-1px",
       ]
     `)
 
     expect(transfromParsed(
       generateParsed('margin: 12px')!,
+      uno as any,
       { shortify: true },
     )).toMatchInlineSnapshot(`
       [
         "m-3",
+      ]
+    `)
+  })
+
+  it('color in theme', () => {
+    expect(transfromParsed(
+      generateParsed('color: foo')!,
+      uno as any,
+      { shortify: true },
+    )).toMatchInlineSnapshot(`
+      [
+        "c-[foo]",
       ]
     `)
   })

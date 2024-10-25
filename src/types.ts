@@ -1,10 +1,16 @@
 import type { CssNode } from 'css-tree'
 
+export type Arrayable<T> = T | T[]
+export type Objectable<T> = Record<string, T>
+export interface Colors {
+  [key: string]: Colors & { DEFAULT?: string } | string
+}
+
 export type Atomic = string
 export type AtomicShort = string
 export type AtomicComposed = [Atomic, AtomicShort?]
 export type StaticPropAtomicMap = [string, Atomic | AtomicComposed]
-export type DynamicPropAtomicMap = [RegExp, (match: RegExpMatchArray) => Atomic | [Atomic, AtomicShort] | undefined]
+export type DynamicPropAtomicMap = [RegExp, (match: RegExpMatchArray) => Atomic | AtomicComposed | undefined]
 export type PropsAtomicMap = StaticPropAtomicMap | DynamicPropAtomicMap
 
 // Parser types
