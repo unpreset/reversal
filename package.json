@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@types/css-tree": "^2.3.8",
+    "@unocss/core": "^0.63.6",
     "css-tree": "^3.0.0",
     "magic-string": "^0.30.12"
   },
