@@ -1,11 +1,13 @@
 import { border } from './border'
 import { colors } from './color'
-import { margin } from './margin'
 import { positions } from './position'
+import { sizes } from './size'
+import { spacing } from './spacing'
 
 export const maps = [
   border,
   positions,
-  margin,
+  spacing,
   colors,
+  sizes
 ].flat(1)

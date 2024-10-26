@@ -1,8 +1,9 @@
-import type { CssNode, Declaration, Dimension, List, Url } from 'css-tree'
+import type { CssLocation, CssNode, Declaration, Dimension, List, Url } from 'css-tree'
+import type MagicString from 'magic-string'
 import { toArray } from '../utils'
 import type { CssValueParsed, CssValueParsedMeta } from '../types'
 
-export function parseDeclarationNode(node: Declaration): CssValueParsed | undefined {
+export function parseDeclarationNode(node: Declaration, source: MagicString): CssValueParsed | undefined {
   if (node.type !== 'Declaration') {
     return
   }
@@ -11,10 +12,14 @@ export function parseDeclarationNode(node: Declaration): CssValueParsed | undefi
   let meta: CssValueParsedMeta[]
 
   if (node.value.type === 'Raw') {
-    meta = toArray<CssValueParsedMeta>({ value: node.value.value })
+    meta = toArray<CssValueParsedMeta>({
+      value: node.value.value,
+      type: 'Raw',
+      raw: getRawString(node.value.loc!, source),
+    })
   }
   else {
-    meta = node.value.children.map(child => parseChildNode(child)) as unknown as CssValueParsedMeta[]
+    meta = node.value.children.toArray().map(child => parseChildNode(child, source)) as unknown as CssValueParsedMeta[]
   }
 
   return {
@@ -23,7 +28,12 @@ export function parseDeclarationNode(node: Declaration): CssValueParsed | undefi
   }
 }
 
-function parseChildNode(child: CssNode): CssValueParsedMeta | undefined {
+function parseChildNode(child: CssNode, source: MagicString): CssValueParsedMeta | undefined {
+  const meta: Partial<CssValueParsedMeta> = {
+    type: child.type as any,
+    raw: getRawString(child.loc!, source),
+  }
+
   switch (child.type) {
     case 'Dimension':
     case 'Number':
@@ -38,10 +48,17 @@ function parseChildNode(child: CssNode): CssValueParsedMeta | undefined {
         _v = `#${child.value}`
       }
       else if (child.type === 'Percentage') {
-        _v = `${child.value}%`
-      }
+        console.log(child.value)
 
-      const meta: CssValueParsedMeta = { value: _v, type: child.type }
+        if (child.value === '100') {
+          _v = 'full'
+        }
+        else {
+          _v = `${child.value}%`
+        }
+        console.log(_v)
+      }
+      meta.value = _v
 
       if ((child as Dimension).unit)
         meta.unit = (child as Dimension).unit
@@ -49,23 +66,27 @@ function parseChildNode(child: CssNode): CssValueParsedMeta | undefined {
       if ((child as Url).type === 'Url')
         meta.fname = 'url'
 
-      return meta
+      break
     }
 
-    case 'Identifier':
-      return {
-        value: child.name,
-        type: child.type,
-      }
+    case 'Identifier': {
+      meta.value = child.name
+      break
+    }
 
-    case 'Function':
-      return {
-        value: child.children.map(child => parseChildNode(child)!).toArray(),
-        fname: child.name,
-        type: child.type,
-      }
+    case 'Function':{
+      meta.fname = child.name
+      meta.value = child.children.toArray().map(c => parseChildNode(c, source)) as any
+      break
+    }
 
     default:
       return undefined
   }
+
+  return meta as CssValueParsedMeta
+}
+
+function getRawString(loc: CssLocation, source: MagicString): string {
+  return source.original.slice(loc.start.offset, loc.end.offset)
 }

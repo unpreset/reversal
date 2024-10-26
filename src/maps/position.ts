@@ -5,8 +5,6 @@ export const positionShort = ['t', 'b', 'l', 'r']
 
 export const positions: PropsAtomicMap[] = [
   ...position.map<StaticPropAtomicMap>((p, i) => [p, [p, positionShort[i]]]),
-  createPos4Props('margin', 'margin', 'm'),
-  createPos4Props('padding', 'padding', 'p'),
 ]
 
 export function createPos4Props(prop: string, atom: string, shortAtom?: string): DynamicPropAtomicMap {

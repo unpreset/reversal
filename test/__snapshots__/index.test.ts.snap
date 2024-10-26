@@ -1,0 +1,211 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`transfromParsed > transfrom parsed 1`] = `
+[
+  {
+    "css": "border-top: 1px solid #eee",
+    "tokens": [
+      "border-t-1px",
+      "border-t-solid",
+      "border-t-#eee",
+    ],
+  },
+  {
+    "css": "border: 1px solid rgb(0 0 0)",
+    "tokens": [
+      "border-1px",
+      "border-solid",
+      "border-[rgb(0_0_0)]",
+    ],
+  },
+  {
+    "css": "margin: 12px",
+    "tokens": [
+      "m-3",
+    ],
+  },
+  {
+    "css": "background-color: hsl(100% var(--foo) 100 / 1)",
+    "tokens": [
+      "bg-[hsl(100%_var(--foo)_100_/_1)]",
+    ],
+  },
+  {
+    "css": "color: #eee",
+    "tokens": [
+      "c-#eee",
+    ],
+  },
+  {
+    "css": "color: var(--bar)",
+    "tokens": [
+      "c-$bar",
+    ],
+  },
+  {
+    "css": "padding: var(--bar, 1)",
+    "tokens": [
+      "p-$bar,1",
+    ],
+  },
+  {
+    "css": "font-size: 16px",
+    "tokens": [
+      "text-4",
+    ],
+  },
+  {
+    "css": "line-height: 1.5",
+    "tokens": [
+      "leading-1.5",
+    ],
+  },
+  {
+    "css": "text-align: center",
+    "tokens": undefined,
+  },
+  {
+    "css": "display: flex",
+    "tokens": undefined,
+  },
+  {
+    "css": "justify-content: space-between",
+    "tokens": undefined,
+  },
+  {
+    "css": "align-items: center",
+    "tokens": undefined,
+  },
+  {
+    "css": "width: 100%",
+    "tokens": [
+      "w-100%",
+    ],
+  },
+  {
+    "css": "height: 50vh",
+    "tokens": [
+      "h-50vh",
+    ],
+  },
+  {
+    "css": "max-width: 1200px",
+    "tokens": [
+      "max-w-300",
+    ],
+  },
+  {
+    "css": "min-height: 300px",
+    "tokens": [
+      "min-h-75",
+    ],
+  },
+  {
+    "css": "padding-top: 20px",
+    "tokens": [
+      "p-t-5",
+    ],
+  },
+  {
+    "css": "padding-right: 10px",
+    "tokens": [
+      "p-r-2.5",
+    ],
+  },
+  {
+    "css": "padding-bottom: 20px",
+    "tokens": [
+      "p-b-5",
+    ],
+  },
+  {
+    "css": "padding-left: 10px",
+    "tokens": [
+      "p-l-2.5",
+    ],
+  },
+  {
+    "css": "margin-left: auto",
+    "tokens": [
+      "m-l-auto",
+    ],
+  },
+  {
+    "css": "margin-right: auto",
+    "tokens": [
+      "m-r-auto",
+    ],
+  },
+  {
+    "css": "border-radius: 5px",
+    "tokens": [
+      "rounded-5px",
+    ],
+  },
+  {
+    "css": "box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)",
+    "tokens": [
+      "shadow-0",
+      "shadow-1",
+      "shadow-2",
+      "shadow-[rgba(0,_0,_0,_0.1)]",
+    ],
+  },
+  {
+    "css": "opacity: 0.8",
+    "tokens": undefined,
+  },
+  {
+    "css": "transition: all 0.3s ease",
+    "tokens": undefined,
+  },
+  {
+    "css": "transform: translateX(50%)",
+    "tokens": undefined,
+  },
+  {
+    "css": "background: linear-gradient(to right, #ff7e5f, #feb47b)",
+    "tokens": [
+      "bg-[linear-gradient(to_right,_#ff7e5f,_#feb47b)]",
+    ],
+  },
+  {
+    "css": "overflow: hidden",
+    "tokens": undefined,
+  },
+  {
+    "css": "z-index: 10",
+    "tokens": undefined,
+  },
+  {
+    "css": "position: relative",
+    "tokens": undefined,
+  },
+  {
+    "css": "top: 10px",
+    "tokens": [
+      "top-2.5",
+    ],
+  },
+  {
+    "css": "left: 20px",
+    "tokens": [
+      "left-5",
+    ],
+  },
+  {
+    "css": "right: 30px",
+    "tokens": [
+      "right-7.5",
+    ],
+  },
+  {
+    "css": "bottom: 40px",
+    "tokens": [
+      "bottom-10",
+    ],
+  },
+]
+`;
+
+exports[`transfromParsed > transfrom parsed 2`] = `[]`;

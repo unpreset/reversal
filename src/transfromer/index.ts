@@ -1,4 +1,4 @@
-import { Magicolor } from '@magic-color/core'
+import { guessType as guessColorType, Magicolor } from '@magic-color/core'
 import type { UnoGenerator } from '@unocss/core'
 import { maps } from '../maps'
 import { toArray } from '../utils'
@@ -9,6 +9,8 @@ const atomicCache: Record<string, string[]> = {}
 const nonTransfromPxProps = [
   'border',
 ]
+
+const HexUnoColorMap = new WeakMap<UnoGenerator, Colors>()
 
 /**
  * 将 CssValueParsedMeta[] 转换为 atomic css
@@ -79,8 +81,17 @@ function analyzeMeta(bundle: {
   const atomics: string[] = []
 
   for (const m of meta) {
-    if (Array.isArray(m)) {
-
+    if (Array.isArray(m.value)) {
+      if (m.type === 'Function') {
+        if (m.fname === 'var') {
+          const token = m.value.map(v => (v.value as string).trim()).join('').replace(/^--/, '$')
+          atomics.push(`${key}-${token}`)
+        }
+        else {
+          const token = m.raw.replace(/\s/g, '_')
+          atomics.push(`${key}-[${token}]`)
+        }
+      }
     }
     else {
       if (m.unit === 'px' && /^\d+$/.test(m.value as string)) {
@@ -91,14 +102,23 @@ function analyzeMeta(bundle: {
           atomics.push(`${key}-${Number(m.value) / 4}`)
         }
       }
-      else if (isColorProp(prop)) {
-        const colorKey = analyzeColor(m.value as string, uno)
-        if (colorKey) {
-          atomics.push(`${key}-${colorKey}`)
+
+      else if (isColorProp(prop) || m.type === 'Hash' || guessColorType(m.raw) != null) {
+        const themeKey = analyzeColor(m.value as string, uno)
+        if (themeKey) {
+          atomics.push(`${key}-${themeKey}`)
         }
         else {
-          atomics.push(`${key}-[${m.value}]`)
+          atomics.push(`${key}-${m.value}`)
         }
+      }
+
+      else if (m.type === 'Identifier') {
+        atomics.push(`${key}-${m.value}`)
+      }
+
+      else {
+        atomics.push(`${key}-${m.raw}`)
       }
     }
   }
@@ -129,14 +149,24 @@ function analyzeColor(color: string, uno: UnoGenerator): string | undefined {
   }
 
   if ((uno.config.theme as any).colors) {
-    const colors = hexable((uno.config.theme as any).colors)
+    let colors: Colors
     let hexColor
+
+    if (HexUnoColorMap.has(uno)) {
+      colors = HexUnoColorMap.get(uno)!
+    }
+    else {
+      colors = hexable((uno.config.theme as any).colors)
+      HexUnoColorMap.set(uno, colors)
+    }
+
     try {
       hexColor = new Magicolor(color).hex()
     }
     catch {
       return
     }
+
     const paths = findColorPath(colors, hexColor)
 
     if (paths && paths.length > 0) {

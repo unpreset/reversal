@@ -1,32 +1,33 @@
 import { Magicolor } from '@magic-color/core'
 import { createGenerator } from '@unocss/core'
 import { parse } from 'css-tree'
+import MagicString from 'magic-string'
 import { describe, expect, it } from 'vitest'
 import type { Declaration } from 'css-tree'
 import { parseCSS, parseDeclarationNode } from '../src'
 import { transfromParsed } from '../src/transfromer'
 
-const source = `/**
- * Paste or drop some CSS here and explore
- * the syntax tree created by chosen parser.
- * Enjoy!
- */
+// const source = `/**
+//  * Paste or drop some CSS here and explore
+//  * the syntax tree created by chosen parser.
+//  * Enjoy!
+//  */
 
-@media screen and (min-width: 480px) {
-    body {
-        background-color: lightgreen;
-    }
-}
+// @media screen and (min-width: 480px) {
+//     body {
+//         background-color: lightgreen;
+//     }
+// }
 
-#main {
-    border: 1px solid black;
-}
+// #main {
+//     border: 1px solid black;
+// }
 
-ul li {
-	padding: 5px;
-  color: #fff;
-}
-`
+// ul li {
+// 	padding: 5px;
+//   color: #fff;
+// }
+// `
 
 const uno = createGenerator({
   theme: {
@@ -48,20 +49,23 @@ const uno = createGenerator({
   },
 })
 
-describe('should', () => {
-  function generateParsed(code: string) {
-    const ast = parse(code, {
-      context: 'declaration',
-      positions: true,
-    }) as Declaration
-    return parseDeclarationNode(ast)
-  }
+function generateParsed(code: string) {
+  const source = new MagicString(code)
+  const ast = parse(source.original, {
+    context: 'declaration',
+    positions: true,
+    filename: 'test.css',
+  }) as Declaration
+  return parseDeclarationNode(ast, source)
+}
 
+describe('should', () => {
   it('declarations', () => {
     expect(generateParsed('content: ""')).toMatchInlineSnapshot(`
       {
         "meta": [
           {
+            "raw": """",
             "type": "String",
             "value": "",
           },
@@ -74,6 +78,7 @@ describe('should', () => {
       {
         "meta": [
           {
+            "raw": "red",
             "type": "Identifier",
             "value": "red",
           },
@@ -82,21 +87,24 @@ describe('should', () => {
       }
     `)
 
-    expect(generateParsed('border: 1px solid #eee')).toMatchInlineSnapshot(`
+    expect(generateParsed('border: 1px solid #fff')).toMatchInlineSnapshot(`
       {
         "meta": [
           {
+            "raw": "1px",
             "type": "Dimension",
             "unit": "px",
             "value": "1",
           },
           {
+            "raw": "solid",
             "type": "Identifier",
             "value": "solid",
           },
           {
+            "raw": "#fff",
             "type": "Hash",
-            "value": "#eee",
+            "value": "#fff",
           },
         ],
         "prop": "border",
@@ -108,31 +116,38 @@ describe('should', () => {
         "meta": [
           {
             "fname": "hsl",
+            "raw": "hsl(100% var(--foo) 100 / 1)",
             "type": "Function",
             "value": [
               {
+                "raw": "100%",
                 "type": "Percentage",
-                "value": "100%",
+                "value": "full",
               },
               {
                 "fname": "var",
+                "raw": "var(--foo)",
                 "type": "Function",
                 "value": [
                   {
+                    "raw": "--foo",
                     "type": "Identifier",
                     "value": "--foo",
                   },
                 ],
               },
               {
+                "raw": "100",
                 "type": "Number",
                 "value": "100",
               },
               {
+                "raw": "/",
                 "type": "Operator",
                 "value": "/",
               },
               {
+                "raw": "1",
                 "type": "Number",
                 "value": "1",
               },
@@ -148,34 +163,42 @@ describe('should', () => {
         "meta": [
           {
             "fname": "calc",
+            "raw": "calc(10px + calc(var(--bar, 1)))",
             "type": "Function",
             "value": [
               {
+                "raw": "10px",
                 "type": "Dimension",
                 "unit": "px",
                 "value": "10",
               },
               {
+                "raw": "+",
                 "type": "Operator",
                 "value": " + ",
               },
               {
                 "fname": "calc",
+                "raw": "calc(var(--bar, 1))",
                 "type": "Function",
                 "value": [
                   {
                     "fname": "var",
+                    "raw": "var(--bar, 1)",
                     "type": "Function",
                     "value": [
                       {
+                        "raw": "--bar",
                         "type": "Identifier",
                         "value": "--bar",
                       },
                       {
+                        "raw": ",",
                         "type": "Operator",
                         "value": ",",
                       },
                       {
+                        "raw": " 1",
                         "type": "Raw",
                         "value": " 1",
                       },
@@ -190,38 +213,65 @@ describe('should', () => {
       }
     `)
   })
+})
 
-  it('transfromParsed', () => {
-    expect(transfromParsed(
-      generateParsed('border-top: 1px solid #eee')!,
-      uno as any,
-      { shortify: true },
-    )).toMatchInlineSnapshot(`
-      [
-        "b-t-1px",
-      ]
-    `)
+describe('transfromParsed', () => {
+  const codes = [
+    'border-top: 1px solid #eee',
+    'border: 1px solid rgb(0 0 0)',
+    'margin: 12px',
+    'background-color: hsl(100% var(--foo) 100 / 1)',
+    'color: #eee',
+    'color: var(--bar)',
+    'padding: var(--bar, 1)',
 
-    expect(transfromParsed(
-      generateParsed('margin: 12px')!,
-      uno as any,
-      { shortify: true },
-    )).toMatchInlineSnapshot(`
-      [
-        "m-3",
-      ]
-    `)
-  })
+    'font-size: 16px',
+    'line-height: 1.5',
+    'text-align: center',
+    'display: flex',
+    'justify-content: space-between',
+    'align-items: center',
+    'width: 100%',
+    'height: 50vh',
+    'max-width: 1200px',
+    'min-height: 300px',
+    'padding-top: 20px',
+    'padding-right: 10px',
+    'padding-bottom: 20px',
+    'padding-left: 10px',
+    'margin-left: auto',
+    'margin-right: auto',
+    'border-radius: 5px',
+    'box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)',
+    'opacity: 0.8',
+    'transition: all 0.3s ease',
+    'transform: translateX(50%)',
+    'background: linear-gradient(to right, #ff7e5f, #feb47b)',
+    'overflow: hidden',
+    'z-index: 10',
+    'position: relative',
+    'top: 10px',
+    'left: 20px',
+    'right: 30px',
+    'bottom: 40px',
+  ]
 
-  it('color in theme', () => {
-    expect(transfromParsed(
-      generateParsed('color: foo')!,
-      uno as any,
-      { shortify: true },
-    )).toMatchInlineSnapshot(`
-      [
-        "c-[foo]",
-      ]
-    `)
+  it('transfrom parsed', () => {
+    const unmatched: string[] = []
+    const result = codes.map((code) => {
+      const parsed = generateParsed(code)
+      if (!parsed) {
+        unmatched.push(code)
+        return undefined
+      }
+
+      return {
+        css: code,
+        tokens: transfromParsed(parsed, uno as any),
+      }
+    }).filter(Boolean)
+
+    expect(result).toMatchSnapshot()
+    expect(unmatched).toMatchSnapshot()
   })
 })

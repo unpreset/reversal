@@ -32,6 +32,10 @@ export interface CssValueParsedMeta {
    * Type of the value
    */
   type: CssNode['type']
+  /**
+   * Raw string of the value
+   */
+  raw: string
 }
 
 export interface CssValueParsed {
