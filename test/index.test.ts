@@ -219,6 +219,7 @@ describe('analyzePared', () => {
     'margin-left: auto',
     'margin-right: auto',
     'border-radius: 5px',
+    'border-top-left-radius: 5px',
     'box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)',
     'opacity: 0.8',
     'transition: all 0.3s ease',

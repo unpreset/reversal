@@ -215,6 +215,15 @@ exports[`analyzePared > transfrom parsed 1`] = `
     ],
   },
   {
+    "css": "border-top-left-radius: 5px",
+    "shortTokens": [
+      "rd-tl-5px",
+    ],
+    "tokens": [
+      "rounded-tl-5px",
+    ],
+  },
+  {
     "css": "box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)",
     "shortTokens": [
       "shadow-0",
@@ -268,13 +277,21 @@ exports[`analyzePared > transfrom parsed 1`] = `
   },
   {
     "css": "z-index: 10",
-    "shortTokens": undefined,
-    "tokens": undefined,
+    "shortTokens": [
+      "z-10",
+    ],
+    "tokens": [
+      "z-10",
+    ],
   },
   {
     "css": "position: relative",
-    "shortTokens": undefined,
-    "tokens": undefined,
+    "shortTokens": [
+      "relative",
+    ],
+    "tokens": [
+      "relative",
+    ],
   },
   {
     "css": "top: 10px",

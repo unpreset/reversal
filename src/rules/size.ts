@@ -1,6 +1,7 @@
-import type { StaticPropAtomicMap } from '../types'
+import { position, positionShort } from './position'
+import type { PropsAtomicMap } from '../types'
 
-export const sizes: StaticPropAtomicMap[] = [
+export const sizes: PropsAtomicMap[] = [
   ['width', 'w'],
   ['height', 'h'],
   ['min-width', 'min-w'],
@@ -9,51 +10,21 @@ export const sizes: StaticPropAtomicMap[] = [
   ['max-height', 'max-h'],
   ['font-size', 'text'],
   ['line-height', ['leading', 'lh']],
-  ['border-radius', ['rounded', 'rd']],
-  ['border-top-left-radius', ['rounded-tl', 'rd-tl']],
-  ['border-top-right-radius', ['rounded-tr', 'rd-tr']],
-  ['border-bottom-right-radius', ['rounded-br', 'rd-br']],
-  ['border-bottom-left-radius', ['rounded-bl', 'rd-bl']],
-  ['border-width', ['border', 'b']],
+  [/^border(?:-(top|bottom|left|right))?(?:-(top|bottom|left|right))?-radius$/, ([, y, x]) => {
+    const pos = [y, x].filter(Boolean).map(p => positionShort[position.indexOf(p)])
+    const suffix = pos.length > 0 ? `-${pos.join('')}` : ''
 
-  ['border-top-width', 'btw'],
-  ['border-right-width', 'brw'],
-  ['border-bottom-width', 'bbw'],
-  ['border-left-width', 'blw'],
-  ['border-style', 'bs'],
-  ['border-top-style', 'bts'],
-  ['border-right-style', 'brs'],
-  ['border-bottom-style', 'bbs'],
-  ['border-left-style', 'bls'],
-  ['border-color', 'bc'],
-  ['border-top-color', 'btc'],
-  ['border-right-color', 'brc'],
-  ['border-bottom-color', 'bbc'],
-  ['border-left-color', 'blc'],
-  ['border', 'b'],
-  ['outline', 'o'],
-  ['outline-width', 'ow'],
-  ['outline-style', 'os'],
-  ['outline-color', 'oc'],
+    return [
+      `rounded${suffix}`,
+      `rd${suffix}`,
+    ]
+  }],
+
+  // ['border-top-left-radius', ['rounded-tl', 'rd-tl']],
+  // ['border-top-right-radius', ['rounded-tr', 'rd-tr']],
+  // ['border-bottom-right-radius', ['rounded-br', 'rd-br']],
+  // ['border-bottom-left-radius', ['rounded-bl', 'rd-bl']],
+  ['border-width', ['border', 'b']],
   ['box-shadow', 'shadow'],
-  ['text-shadow', 'tshadow'],
-  ['letter-spacing', 'ls'],
-  ['word-spacing', 'ws'],
-  ['background-size', 'bg-size'],
-  ['background-position', 'bg-pos'],
-  ['background-repeat', 'bg-repeat'],
-  ['background-attachment', 'bg-attach'],
-  ['background-origin', 'bg-origin'],
-  ['background-clip', 'bg-clip'],
-  ['background-color', 'bgc'],
-  ['background-image', 'bgi'],
-  ['background-blend-mode', 'bg-blend'],
-  ['background-attachment', 'bg-attach'],
-  ['background-origin', 'bg-origin'],
-  ['background-clip', 'bg-clip'],
-  ['background-color', 'bgc'],
-  ['background-image', 'bgi'],
-  ['background-blend-mode', 'bg-blend'],
-  ['background-attachment', 'bg-attach'],
-  ['background-origin', ' bg-origin'],
+  ['letter-spacing', 'tracking'],
 ]
