@@ -5,29 +5,7 @@ import MagicString from 'magic-string'
 import { describe, expect, it } from 'vitest'
 import type { Declaration } from 'css-tree'
 import { parseCSS, parseDeclarationNode } from '../src'
-import { transfromParsed } from '../src/transfromer'
-
-// const source = `/**
-//  * Paste or drop some CSS here and explore
-//  * the syntax tree created by chosen parser.
-//  * Enjoy!
-//  */
-
-// @media screen and (min-width: 480px) {
-//     body {
-//         background-color: lightgreen;
-//     }
-// }
-
-// #main {
-//     border: 1px solid black;
-// }
-
-// ul li {
-// 	padding: 5px;
-//   color: #fff;
-// }
-// `
+import { analyzePared } from '../src/analysis'
 
 const uno = createGenerator({
   theme: {
@@ -122,7 +100,7 @@ describe('should', () => {
               {
                 "raw": "100%",
                 "type": "Percentage",
-                "value": "full",
+                "value": "100",
               },
               {
                 "fname": "var",
@@ -215,7 +193,7 @@ describe('should', () => {
   })
 })
 
-describe('transfromParsed', () => {
+describe('analyzePared', () => {
   const codes = [
     'border-top: 1px solid #eee',
     'border: 1px solid rgb(0 0 0)',
@@ -224,7 +202,6 @@ describe('transfromParsed', () => {
     'color: #eee',
     'color: var(--bar)',
     'padding: var(--bar, 1)',
-
     'font-size: 16px',
     'line-height: 1.5',
     'text-align: center',
@@ -267,11 +244,26 @@ describe('transfromParsed', () => {
 
       return {
         css: code,
-        tokens: transfromParsed(parsed, uno as any),
+        tokens: analyzePared(parsed, uno as any),
+        shortTokens: analyzePared(parsed, uno as any, { shortify: true }),
       }
     }).filter(Boolean)
 
     expect(result).toMatchSnapshot()
     expect(unmatched).toMatchSnapshot()
+  })
+  it('transfrom parsedsss', () => {
+    const code = `width: 100%`
+    const result = analyzePared(
+      generateParsed(code)!,
+      uno as any,
+      { shortify: true },
+    )
+
+    expect(result).toMatchInlineSnapshot(`
+      [
+        "w-full",
+      ]
+    `)
   })
 })

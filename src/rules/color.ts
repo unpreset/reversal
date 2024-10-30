@@ -5,4 +5,11 @@ export const colors: StaticPropAtomicMap[] = [
   ['background', 'bg'],
   ['background-color', 'bg'],
   ['border-color', ['border', 'b']],
+
+  ['opacity', ['opacity', 'op'], {
+    separator: '-',
+    valueProcessor: (v: string) => {
+      return (Number.parseFloat(v) * 100).toString()
+    },
+  }],
 ]

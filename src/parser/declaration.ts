@@ -47,17 +47,6 @@ function parseChildNode(child: CssNode, source: MagicString): CssValueParsedMeta
       if (child.type === 'Hash') {
         _v = `#${child.value}`
       }
-      else if (child.type === 'Percentage') {
-        console.log(child.value)
-
-        if (child.value === '100') {
-          _v = 'full'
-        }
-        else {
-          _v = `${child.value}%`
-        }
-        console.log(_v)
-      }
       meta.value = _v
 
       if ((child as Dimension).unit)

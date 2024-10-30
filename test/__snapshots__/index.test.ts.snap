@@ -1,9 +1,14 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`transfromParsed > transfrom parsed 1`] = `
+exports[`analyzePared > transfrom parsed 1`] = `
 [
   {
     "css": "border-top: 1px solid #eee",
+    "shortTokens": [
+      "b-t-1px",
+      "b-t-solid",
+      "b-t-#eee",
+    ],
     "tokens": [
       "border-t-1px",
       "border-t-solid",
@@ -12,6 +17,11 @@ exports[`transfromParsed > transfrom parsed 1`] = `
   },
   {
     "css": "border: 1px solid rgb(0 0 0)",
+    "shortTokens": [
+      "b-1px",
+      "b-solid",
+      "b-[rgb(0_0_0)]",
+    ],
     "tokens": [
       "border-1px",
       "border-solid",
@@ -20,130 +30,198 @@ exports[`transfromParsed > transfrom parsed 1`] = `
   },
   {
     "css": "margin: 12px",
+    "shortTokens": [
+      "m-3",
+    ],
     "tokens": [
       "m-3",
     ],
   },
   {
     "css": "background-color: hsl(100% var(--foo) 100 / 1)",
+    "shortTokens": [
+      "bg-[hsl(100%_var(--foo)_100_/_1)]",
+    ],
     "tokens": [
       "bg-[hsl(100%_var(--foo)_100_/_1)]",
     ],
   },
   {
     "css": "color: #eee",
+    "shortTokens": [
+      "c-#eee",
+    ],
     "tokens": [
       "c-#eee",
     ],
   },
   {
     "css": "color: var(--bar)",
+    "shortTokens": [
+      "c-$bar",
+    ],
     "tokens": [
       "c-$bar",
     ],
   },
   {
     "css": "padding: var(--bar, 1)",
+    "shortTokens": [
+      "p-$bar,1",
+    ],
     "tokens": [
       "p-$bar,1",
     ],
   },
   {
     "css": "font-size: 16px",
+    "shortTokens": [
+      "text-4",
+    ],
     "tokens": [
       "text-4",
     ],
   },
   {
     "css": "line-height: 1.5",
+    "shortTokens": [
+      "lh-1.5",
+    ],
     "tokens": [
       "leading-1.5",
     ],
   },
   {
     "css": "text-align: center",
+    "shortTokens": undefined,
     "tokens": undefined,
   },
   {
     "css": "display: flex",
-    "tokens": undefined,
+    "shortTokens": [
+      "flex",
+    ],
+    "tokens": [
+      "flex",
+    ],
   },
   {
     "css": "justify-content: space-between",
+    "shortTokens": undefined,
     "tokens": undefined,
   },
   {
     "css": "align-items: center",
+    "shortTokens": undefined,
     "tokens": undefined,
   },
   {
     "css": "width: 100%",
+    "shortTokens": [
+      "w-full",
+    ],
     "tokens": [
-      "w-100%",
+      "w-full",
     ],
   },
   {
     "css": "height: 50vh",
+    "shortTokens": [
+      "h-50vh",
+    ],
     "tokens": [
       "h-50vh",
     ],
   },
   {
     "css": "max-width: 1200px",
+    "shortTokens": [
+      "max-w-300",
+    ],
     "tokens": [
       "max-w-300",
     ],
   },
   {
     "css": "min-height: 300px",
+    "shortTokens": [
+      "min-h-75",
+    ],
     "tokens": [
       "min-h-75",
     ],
   },
   {
     "css": "padding-top: 20px",
+    "shortTokens": [
+      "p-t-5",
+    ],
     "tokens": [
       "p-t-5",
     ],
   },
   {
     "css": "padding-right: 10px",
+    "shortTokens": [
+      "p-r-2.5",
+    ],
     "tokens": [
       "p-r-2.5",
     ],
   },
   {
     "css": "padding-bottom: 20px",
+    "shortTokens": [
+      "p-b-5",
+    ],
     "tokens": [
       "p-b-5",
     ],
   },
   {
     "css": "padding-left: 10px",
+    "shortTokens": [
+      "p-l-2.5",
+    ],
     "tokens": [
       "p-l-2.5",
     ],
   },
   {
     "css": "margin-left: auto",
+    "shortTokens": [
+      "m-l-auto",
+    ],
     "tokens": [
       "m-l-auto",
     ],
   },
   {
     "css": "margin-right: auto",
+    "shortTokens": [
+      "m-r-auto",
+    ],
     "tokens": [
       "m-r-auto",
     ],
   },
   {
     "css": "border-radius: 5px",
+    "shortTokens": [
+      "rd-5px",
+    ],
     "tokens": [
       "rounded-5px",
     ],
   },
   {
     "css": "box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)",
+    "shortTokens": [
+      "shadow-0",
+      "shadow-1",
+      "shadow-2",
+      "shadow-[rgba(0,_0,_0,_0.1)]",
+    ],
     "tokens": [
       "shadow-0",
       "shadow-1",
@@ -153,54 +231,83 @@ exports[`transfromParsed > transfrom parsed 1`] = `
   },
   {
     "css": "opacity: 0.8",
-    "tokens": undefined,
+    "shortTokens": [
+      "op-80",
+    ],
+    "tokens": [
+      "opacity-80",
+    ],
   },
   {
     "css": "transition: all 0.3s ease",
+    "shortTokens": undefined,
     "tokens": undefined,
   },
   {
     "css": "transform: translateX(50%)",
+    "shortTokens": undefined,
     "tokens": undefined,
   },
   {
     "css": "background: linear-gradient(to right, #ff7e5f, #feb47b)",
+    "shortTokens": [
+      "bg-[linear-gradient(to_right,_#ff7e5f,_#feb47b)]",
+    ],
     "tokens": [
       "bg-[linear-gradient(to_right,_#ff7e5f,_#feb47b)]",
     ],
   },
   {
     "css": "overflow: hidden",
-    "tokens": undefined,
+    "shortTokens": [
+      "of-hidden",
+    ],
+    "tokens": [
+      "overflow-hidden",
+    ],
   },
   {
     "css": "z-index: 10",
+    "shortTokens": undefined,
     "tokens": undefined,
   },
   {
     "css": "position: relative",
+    "shortTokens": undefined,
     "tokens": undefined,
   },
   {
     "css": "top: 10px",
+    "shortTokens": [
+      "t-2.5",
+    ],
     "tokens": [
       "top-2.5",
     ],
   },
   {
     "css": "left: 20px",
+    "shortTokens": [
+      "l-5",
+    ],
     "tokens": [
       "left-5",
     ],
   },
   {
     "css": "right: 30px",
+    "shortTokens": [
+      "r-7.5",
+    ],
     "tokens": [
       "right-7.5",
     ],
   },
   {
     "css": "bottom: 40px",
+    "shortTokens": [
+      "b-10",
+    ],
     "tokens": [
       "bottom-10",
     ],
@@ -208,4 +315,4 @@ exports[`transfromParsed > transfrom parsed 1`] = `
 ]
 `;
 
-exports[`transfromParsed > transfrom parsed 2`] = `[]`;
+exports[`analyzePared > transfrom parsed 2`] = `[]`;
