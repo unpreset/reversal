@@ -4,6 +4,7 @@ export const colors: StaticPropAtomicMap[] = [
   ['color', 'c'],
   ['background', 'bg'],
   ['background-color', 'bg'],
+  ['background-image', 'bg'],
   ['border-color', ['border', 'b']],
 
   ['opacity', ['opacity', 'op'], {

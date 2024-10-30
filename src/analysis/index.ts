@@ -56,7 +56,7 @@ function analyzeMeta(bundle: {
     let token: string | undefined
 
     if (Array.isArray(m.value)) {
-      if (m.type === 'Function') {
+      if (m.type === 'Function' || m.type === 'Url') {
         if (m.fname === 'var') {
           token = m.value.map(v => (v.value as string).trim()).join('').replace(/^--/, '$')
         }
@@ -74,7 +74,6 @@ function analyzeMeta(bundle: {
           token = `${Number(m.value) / 4}`
         }
       }
-
       else if (isColorProp(prop) || m.type === 'Hash' || guessColorType(m.raw) != null) {
         const themeKey = transformColor(m.value as string, uno)
         if (themeKey) {
@@ -84,7 +83,9 @@ function analyzeMeta(bundle: {
           token = m.value
         }
       }
-
+      else if (m.type === 'Url') {
+        token = `[${m.raw.replace(/\s/g, '_')}]`
+      }
       else if (m.type === 'Identifier') {
         token = m.value
       }

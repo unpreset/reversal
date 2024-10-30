@@ -232,6 +232,7 @@ describe('analyzePared', () => {
     'left: 20px',
     'right: 30px',
     'bottom: 40px',
+    `background-image: url('https://example.com/image.png')`,
   ]
 
   it('transfrom parsed', () => {
@@ -254,7 +255,7 @@ describe('analyzePared', () => {
     expect(unmatched).toMatchSnapshot()
   })
   it('transfrom parsedsss', () => {
-    const code = `width: 100%`
+    const code = `background-image: url('https://example.com/image.png')`
     const result = analyzePared(
       generateParsed(code)!,
       uno as any,
@@ -263,7 +264,7 @@ describe('analyzePared', () => {
 
     expect(result).toMatchInlineSnapshot(`
       [
-        "w-full",
+        "bg-[url('https://example.com/image.png')]",
       ]
     `)
   })

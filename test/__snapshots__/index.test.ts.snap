@@ -329,6 +329,15 @@ exports[`analyzePared > transfrom parsed 1`] = `
       "bottom-10",
     ],
   },
+  {
+    "css": "background-image: url('https://example.com/image.png')",
+    "shortTokens": [
+      "bg-[url('https://example.com/image.png')]",
+    ],
+    "tokens": [
+      "bg-[url('https://example.com/image.png')]",
+    ],
+  },
 ]
 `;
 
