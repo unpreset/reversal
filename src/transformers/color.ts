@@ -1,6 +1,6 @@
-import { guessType, Magicolor } from '@magic-color/core'
 import type { UnoGenerator } from '@unocss/core'
 import type { Colors } from '../types'
+import { guessType, Magicolor } from '@magic-color/core'
 
 const HexUnoColorMap = new WeakMap<UnoGenerator, Colors>()
 

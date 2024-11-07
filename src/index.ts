@@ -1,6 +1,6 @@
+import type { Rule, StyleSheet } from 'css-tree'
 import { parse } from 'css-tree'
 import MagicString from 'magic-string'
-import type { Rule, StyleSheet } from 'css-tree'
 
 export * from './parser/declaration'
 

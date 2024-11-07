@@ -1,7 +1,7 @@
-import type { CssLocation, CssNode, Declaration, Dimension, List, Url } from 'css-tree'
+import type { CssLocation, CssNode, Declaration, Dimension, Url } from 'css-tree'
 import type MagicString from 'magic-string'
-import { toArray } from '../utils'
 import type { CssValueParsed, CssValueParsedMeta } from '../types'
+import { toArray } from '../utils'
 
 export function parseDeclarationNode(node: Declaration, source: MagicString): CssValueParsed | undefined {
   if (node.type !== 'Declaration') {

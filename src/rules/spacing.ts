@@ -1,5 +1,5 @@
-import { createPos4Props } from './position'
 import type { PropsAtomicMap } from '../types'
+import { createPos4Props } from './position'
 
 export const spacing: PropsAtomicMap[] = [
   ['margin', 'm'],

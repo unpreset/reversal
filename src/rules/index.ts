@@ -1,10 +1,10 @@
+import type { DynamicPropAtomicMap, StaticPropAtomicMap } from '../types'
 import { border } from './border'
 import { colors } from './color'
 import { displays } from './display'
 import { positions } from './position'
 import { sizes } from './size'
 import { spacing } from './spacing'
-import type { DynamicPropAtomicMap, StaticPropAtomicMap } from '../types'
 
 export const rules = [
   border,

@@ -1,9 +1,9 @@
 import type { UnoGenerator } from '@unocss/core'
+import type { AtomicComposed, AtomicMeta, CssValueParsed, CssValueParsedMeta, DynamicPropAtomicMap, StaticPropAtomicMap, TransfromOptions } from '../types'
 import { EmptyKeyPlaceholder } from '../constants'
 import { defaultRuleMeta, dynamicRules, staticRules } from '../rules'
 import { guessColorType, isColorProp, transformColor } from '../transformers/color'
-import { noop, toArray } from '../utils'
-import type { AtomicComposed, AtomicMeta, Colors, CssValueParsed, CssValueParsedMeta, DynamicPropAtomicMap, ProcessorContext, StaticPropAtomicMap, TransfromOptions } from '../types'
+import { toArray } from '../utils'
 
 const atomicCache: Record<string, string[]> = {}
 
@@ -13,8 +13,8 @@ const nonTransfromPxProps = [
 
 /**
  * 将 CssValueParsedMeta[] 转换为 atomic css
- * @param meta CssValueParsedMeta[]
- * @returns
+ * @param metas
+ * @param options
  */
 export function transfrom(metas: CssValueParsedMeta[], options: TransfromOptions = {}): string[] {
 

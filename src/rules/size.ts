@@ -1,5 +1,5 @@
-import { position, positionShort } from './position'
 import type { PropsAtomicMap } from '../types'
+import { position, positionShort } from './position'
 
 export const sizes: PropsAtomicMap[] = [
   ['width', 'w'],
