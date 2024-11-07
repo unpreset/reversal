@@ -1,10 +1,9 @@
-import { Magicolor } from '@magic-color/core'
+import type { Declaration } from 'css-tree'
 import { createGenerator } from '@unocss/core'
 import { parse } from 'css-tree'
 import MagicString from 'magic-string'
 import { describe, expect, it } from 'vitest'
-import type { Declaration } from 'css-tree'
-import { parseCSS, parseDeclarationNode } from '../src'
+import { parseDeclarationNode } from '../src'
 import { analyzePared } from '../src/analysis'
 
 const uno = createGenerator({
@@ -254,6 +253,7 @@ describe('analyzePared', () => {
     expect(result).toMatchSnapshot()
     expect(unmatched).toMatchSnapshot()
   })
+
   it('transfrom parsedsss', () => {
     const code = `background-image: url('https://example.com/image.png')`
     const result = analyzePared(

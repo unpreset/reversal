@@ -296,7 +296,7 @@ exports[`analyzePared > transfrom parsed 1`] = `
   {
     "css": "top: 10px",
     "shortTokens": [
-      "t-2.5",
+      "top-2.5",
     ],
     "tokens": [
       "top-2.5",
@@ -305,7 +305,7 @@ exports[`analyzePared > transfrom parsed 1`] = `
   {
     "css": "left: 20px",
     "shortTokens": [
-      "l-5",
+      "left-5",
     ],
     "tokens": [
       "left-5",
@@ -314,7 +314,7 @@ exports[`analyzePared > transfrom parsed 1`] = `
   {
     "css": "right: 30px",
     "shortTokens": [
-      "r-7.5",
+      "right-7.5",
     ],
     "tokens": [
       "right-7.5",
@@ -323,7 +323,7 @@ exports[`analyzePared > transfrom parsed 1`] = `
   {
     "css": "bottom: 40px",
     "shortTokens": [
-      "b-10",
+      "bottom-10",
     ],
     "tokens": [
       "bottom-10",

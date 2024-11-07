@@ -1,11 +1,11 @@
-import { EmptyKeyPlaceholder } from '../constants'
 import type { AtomicComposed, DynamicPropAtomicMap, PropsAtomicMap, StaticPropAtomicMap } from '../types'
+import { EmptyKeyPlaceholder } from '../constants'
 
 export const position = ['top', 'bottom', 'left', 'right']
 export const positionShort = ['t', 'b', 'l', 'r']
 
 export const positions: PropsAtomicMap[] = [
-  ...position.map<StaticPropAtomicMap>((p, i) => [p, [p, positionShort[i]]]),
+  ...position.map<StaticPropAtomicMap>(p => [p, p]),
   ['position', EmptyKeyPlaceholder, { separator: '' }],
   ['z-index', 'z'],
 ]
